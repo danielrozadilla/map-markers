@@ -10,6 +10,8 @@ function cargarMapa(propiedades) {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: myLatLng,
+    disableDefaultUI: true,
+    zoomControl: true,
   });
   map.setOptions({
     styles: [
