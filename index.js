@@ -33,12 +33,6 @@ function cargarMapa(propiedades) {
     ]
   });
 
-  //const image =
-  "https://developers.google.com/maps/documentation/javascript/examples/full/images/propflag.png";
-
-  // Create an info window to share between markers.
-  //const infoWindow = new google.maps.InfoWindow();
-
   for (let i = 0; i < propiedades.length; i++) {
     let prop = propiedades[i];
     if (prop[11] &&prop[12]) {    
