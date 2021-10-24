@@ -39,16 +39,9 @@ function cargarMapa(propiedades) {
   // Create an info window to share between markers.
   //const infoWindow = new google.maps.InfoWindow();
 
-  /*[
-         ["Bondi prop", -34.890542, -57.974856, 4, "https://google.com"],
-         ["Coogee prop", -34.893342, -57.983356, 5, "https://google.com"],
-         ["Cronulla prop", -34.870542, -57.868856, 3, "https://google.com"],
-         ["Manly prop", -34.870542, -57.984456, 2, "https://google.com"],
-         ["Maroubra prop", -34.950542, -57.972856, 1, "https://google.com"],
-     ];*/
   for (let i = 0; i < propiedades.length; i++) {
     let prop = propiedades[i];
-    // if (prop[0] != "Búsqueda") {    
+    if (prop[11] &&prop[12]) {    
       var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
       switch (prop[0]) {
         case "Búsqueda": {
@@ -65,11 +58,21 @@ function cargarMapa(propiedades) {
         }
       };
 
-    const marker = new google.maps.Marker({     
+      let latitud;
+      let longitud;
+
+      if (prop[11]){
+        latitud=parseFloat(prop[11].replace(",", "."));
+      }
+      if (prop[12]){
+        longitud=parseFloat(prop[12].replace(",", "."));
+      }
+     
+    const marker = new google.maps.Marker({   
 
       position: {
-        lat: parseFloat(prop[11].replace(",", ".")),
-        lng: parseFloat(prop[12].replace(",", "."))
+        lat: latitud,
+        lng: longitud
       },
       map,
       icon: image,
@@ -101,7 +104,7 @@ function cargarMapa(propiedades) {
       document.getElementById("tipo").innerHTML = oferta + ": " + tipo;
       document.getElementById("direccion").innerHTML = direccion;
       document.getElementById("observaciones").innerHTML = observaciones;
-      document.getElementById("precio").innerHTML = "U$D " + precio;
+      document.getElementById("precio").innerHTML = precio;
       document.getElementById("link").href = link;
       if (link.length > 5) {        
         document.getElementById("link").classList.remove("invisible");
@@ -115,7 +118,7 @@ function cargarMapa(propiedades) {
       document.getElementById("telefono").innerHTML = telefono;
       document.getElementById("email").innerHTML = email;
     });
-    // }
+  }
   }
 }
 
