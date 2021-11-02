@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LCNI La Plata</title>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+</head>
+
+<body>
+
+  
+  <div id="leyenda">
+    <span class="oportunidad"><span class="cuadrito"></span> Oportunidad</span>
+    <span class="ingreso"><span class="cuadrito"></span>Ingreso</span>
+    <span class="busqueda"><span class="cuadrito"></span>Búsqueda</span>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <img src="lcni-la-plata.png" alt="LCNI La PLata" height="50px">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item m-2">
+            <div class="input-group">
+              <select class="form-select col" id="filtro_tipo">
+                <option value="Todos" selected>Tipo Propiedad</option>
+                <option value="Monoambiente">Monoambiente</option>
+                <option value="Dpto 1 dorm">Dpto 1 dorm</option>
+                <option value="Dpto 2 dorm">Dpto 2 dorm</option>
+                <option value="Dpto 3 dorm">Dpto 3 dorm</option>
+                <option value="Casa">Casa</option>
+                <option value="Campo">Campo</option>
+                <option value="PH">PH</option>
+                <option value="Galpon">Galpon</option>
+                <option value="Lote">Lote</option>
+                <option value="Duplex">Duplex</option>
+                <option value="Local comercial">Local comercial</option>
+                <option value="Otro">Otro</option>
+                <option value="Crowdfunding">Crowdfunding</option>
+              </select>
+            </div>
+          </li>
+          <li class="nav-item m-2">
+            <div class="input-group">
+              <select class="form-select col" id="filtro_oferta">
+                <option value="Todos" selected>Estado</option>
+                <option value="Búsqueda">Búsqueda</option>
+                <option value="Ingreso">Ingreso</option>
+                <option value="Oportunidad">Oportunidad</option>
+              </select>
+            </div>
+          </li>
+          <li class="nav-item m-2">
+            <div class="input-group">
+              <input type="number" name="filtro_p_min" id="filtro_p_min" min=0 class="form-control col" placeholder="Precio mínimo">
+            </div>
+          </li>
+          <li class="nav-item m-2">
+            <div class="input-group">
+              <input type="number" name="filtro_p_max" id="filtro_p_max" min=0 class="form-control col" placeholder="Precio máximo">
+            </div>
+          </li>
+          <li class="nav-item m-2">
+            <div class="input-group">
+              <input type="button" value="Aplicar filtros" id="aplicar_filtros" class="btn btn-success col">
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog col-sm-10 col-md-4">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tipo"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <p id="direccion"></p>
+              <p id="observaciones"></p>
+              <p id="precio"></p>
+              <a id="link" href="#" target="_blank" class="btn btn-success">Ver en inmobiliaria</a>
+            </div>
+          </div>
+          <br>
+          <div class="card">
+            <div class="card-body">
+              <H5>Contacto</H5>
+              <p class="card-text" id="inmobiliaria"></p>
+              <p class="card-text" id="responsable"></p>
+              <p class="card-text" id="telefono"></p>
+              <p class="card-text" id="email"></p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <!--<button type="button" class="btn btn-primary">Ver ficha</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="map" class="col-12"></div>
+
+
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiVyEftA2TW5WKwPf3vhtND8Tmkjqf8dc&callback=initMap&v=weekly" async></script>
+  <!--AIzaSyDiVyEftA2TW5WKwPf3vhtND8Tmkjqf8dc-->
+  <script src="./index.js"></script>
+</body>
+
+</html>
