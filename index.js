@@ -14,10 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
   filtro_p_min.addEventListener('change', filtrar);
 */
 
-
   var aplicar_filtros = document.getElementById('aplicar_filtros');
   aplicar_filtros.addEventListener('click', filtrar);
-
 }, false);
 
 
@@ -25,7 +23,11 @@ function initMap() {
   getData();
 }
 
-function cargarMapa(propiedades) {
+function cargarMapa(data) {
+  var propiedades = [];
+  if (data.hasOwnProperty("values")) {
+    propiedades = data.values;
+  }
   const myLatLng = {
     lat: -34.918325834069165,
     lng: -57.96829147114838
@@ -64,7 +66,7 @@ function cargarMapa(propiedades) {
 
 function setMarkers(propiedades, map) {
   for (let i = 0; i < propiedades.length; i++) {
-    let prop = propiedades[i];    
+    let prop = propiedades[i];
     /*seleccion de imagen*/
     if (prop[13] && prop[14]) {
       var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
@@ -122,7 +124,7 @@ function setMarkers(propiedades, map) {
   }
 }
 
-function filtrar() {  
+function filtrar() {
   let filtro_t = document.getElementById('filtro_tipo');
   let filtro_o = document.getElementById('filtro_oferta');
 
@@ -183,12 +185,12 @@ function getFicha(prop) {
 }
 
 function getData() {
-  /*Prueba*/ // var url = "https://sheets.googleapis.com/v4/spreadsheets/1Z6ckEgXOxzM9tjS9p-w7YTqXjf9D6IF_PiJlP4j8KKU/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
+  /*Prueba*/ //var url = "https://sheets.googleapis.com/v4/spreadsheets/1Z6ckEgXOxzM9tjS9p-w7YTqXjf9D6IF_PiJlP4j8KKU/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
   var url = "https://sheets.googleapis.com/v4/spreadsheets/1h5QpK4d5NAmDET20Pe7tAgDYcWjXzztUSV7Qq0ALIuk/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
 
   var datos = [];
   fetch(url).then(response => response.json())
-    .then(data => {    
-      cargarMapa(data.values);
+    .then(data => {
+      cargarMapa(data);
     });
 }
