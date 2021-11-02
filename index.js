@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 */
 
   var aplicar_filtros = document.getElementById('aplicar_filtros');
-  aplicar_filtros.addEventListener('click', filtrar);
+  aplicar_filtros.addEventListener('click', filtrar);  
 }, false);
 
 
@@ -124,7 +124,8 @@ function setMarkers(propiedades, map) {
   }
 }
 
-function filtrar() {
+function filtrar() {  
+  document.getElementById("navbarText").classList.remove('show');
   let filtro_t = document.getElementById('filtro_tipo');
   let filtro_o = document.getElementById('filtro_oferta');
 
