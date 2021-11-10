@@ -257,8 +257,8 @@ function getFicha(prop) {
 
 function getData() {
   /*Prueba*/
-  var url = "https://sheets.googleapis.com/v4/spreadsheets/1Z6ckEgXOxzM9tjS9p-w7YTqXjf9D6IF_PiJlP4j8KKU/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
-  //var url = "https://sheets.googleapis.com/v4/spreadsheets/1h5QpK4d5NAmDET20Pe7tAgDYcWjXzztUSV7Qq0ALIuk/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
+  //var url = "https://sheets.googleapis.com/v4/spreadsheets/1Z6ckEgXOxzM9tjS9p-w7YTqXjf9D6IF_PiJlP4j8KKU/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
+  var url = "https://sheets.googleapis.com/v4/spreadsheets/1h5QpK4d5NAmDET20Pe7tAgDYcWjXzztUSV7Qq0ALIuk/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
 
   var datos = [];
   fetch(url).then(response => response.json())
