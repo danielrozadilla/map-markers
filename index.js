@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 */
 
   var aplicar_filtros = document.getElementById('aplicar_filtros');
-  aplicar_filtros.addEventListener('click', filtrar);  
+  aplicar_filtros.addEventListener('click', filtrar);
 }, false);
 
 
@@ -122,21 +122,91 @@ function setMarkers(propiedades, map) {
       });
     }
   }
+  filtrar();
 }
 
-function filtrar() {  
+document.body.onload = function () {
+  cargar_fechas();
+}
+
+function cargar_fechas() {
+  var array = [];
+  let inicio = "1/11/2021";
+  let hoy = new Date();
+  let fecha = stringDMAToDate(inicio);
+  while (fecha <= hoy) {
+    array.push(dateToStringDMA(fecha));
+    fecha = sumarDias(fecha, 7);
+  }
+  addOptions(array);
+}
+
+// Rutina para agregar opciones a un <select>
+function addOptions(array) {
+  var select = document.getElementById('filtro_fecha');
+
+  for (value in array) {
+    var option = document.createElement("option");
+    option.text = array[value];
+    select.add(option);
+  }
+  option.selected = true;
+  // document.getElementById('filtro_fecha').value = array[0];
+  // console.log(document.getElementById('filtro_fecha').value);
+}
+
+function sumarDias(fecha, dias) {
+  fecha.setDate(fecha.getDate() + dias);
+  return fecha;
+}
+
+function dateToStringDMA(fecha) {
+  var dd = String(fecha.getDate()).padStart(2, '0');
+  var mm = String(fecha.getMonth() + 1).padStart(2, '0'); // Enero es 0  
+  var yyyy = fecha.getFullYear();
+  return dd + '/' + mm + '/' + yyyy;
+}
+
+function stringDMAToDate(stringDate) {
+  var dateParts = stringDate.split("/");
+  // month is 0-based, that's why we need dataParts[1] - 1
+  return (new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]));
+}
+
+function getProximaSemana(stringDate) {
+  let dateObject = stringDMAToDate(stringDate);
+  let prox = sumarDias(dateObject, 7);
+  return dateToStringDMA(prox);
+}
+
+function filtrar() {
   document.getElementById("navbarText").classList.remove('show');
   let filtro_t = document.getElementById('filtro_tipo');
   let filtro_o = document.getElementById('filtro_oferta');
-
+  let filtro_f = document.getElementById('filtro_fecha');
+  let fecha_hasta = getProximaSemana(filtro_f.value);
+  //fecha_hasta='30/11/2021';
+  let fecha_desde = filtro_f.value;
+  //console.log(fecha_desde);
+  //console.log(fecha_hasta);
   marcadores.forEach(marcador => {
+    var dateParts = marcador.data[8].split("/");
+    var dd = marcador.data[8].split("/")[0].padStart(2, '0');
+    var mm = marcador.data[8].split("/")[1].padStart(2, '0'); // Enero es 0  
+    var yyyy = marcador.data[8].split("/")[2];
+    let fecha= dd + '/' + mm + '/' + yyyy;
+
     let cumple = true;
+    //console.log(marcador.data[8] + (marcador.data[8] >= fecha_desde));
+   // console.log(fecha + (fecha < fecha_hasta));
+    cumple = cumple && (fecha >= fecha_desde) && (fecha < fecha_hasta);
     cumple = cumple && (filtro_t.value == "Todos" || marcador.data[1] == filtro_t.value);
     cumple = cumple && (filtro_o.value == "Todos" || marcador.data[0] == filtro_o.value);
     cumple = cumple && (filtro_p_min.value == "" || soloDigitos(marcador.data[2]) >= filtro_p_min.value);
     cumple = cumple && (filtro_p_max.value == "" || soloDigitos(marcador.data[2]) <= filtro_p_max.value);
     marcador.marker.setVisible(cumple);
   });
+
 }
 
 
@@ -186,12 +256,14 @@ function getFicha(prop) {
 }
 
 function getData() {
-  /*Prueba*/ //var url = "https://sheets.googleapis.com/v4/spreadsheets/1Z6ckEgXOxzM9tjS9p-w7YTqXjf9D6IF_PiJlP4j8KKU/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
-  var url = "https://sheets.googleapis.com/v4/spreadsheets/1h5QpK4d5NAmDET20Pe7tAgDYcWjXzztUSV7Qq0ALIuk/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
+  /*Prueba*/
+  var url = "https://sheets.googleapis.com/v4/spreadsheets/1Z6ckEgXOxzM9tjS9p-w7YTqXjf9D6IF_PiJlP4j8KKU/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
+  //var url = "https://sheets.googleapis.com/v4/spreadsheets/1h5QpK4d5NAmDET20Pe7tAgDYcWjXzztUSV7Qq0ALIuk/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
 
   var datos = [];
   fetch(url).then(response => response.json())
     .then(data => {
       cargarMapa(data);
+      //console.log(data);
     });
 }
