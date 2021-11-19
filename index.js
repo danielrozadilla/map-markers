@@ -37,6 +37,7 @@ function cargarMapa(data) {
     center: myLatLng,
     disableDefaultUI: true,
     zoomControl: true,
+    mapTypeControl: true,   
   });
 
   map.setOptions({
