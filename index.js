@@ -1,19 +1,6 @@
 let marcadores = [];
 
-document.addEventListener('DOMContentLoaded', function () {
-  /*var filtro_t = document.getElementById('filtro_tipo');
-  filtro_t.addEventListener('change', filtrar);
-
-  var filtro_o = document.getElementById('filtro_oferta');
-  filtro_o.addEventListener('change', filtrar);
-
-  var filtro_p_max = document.getElementById('filtro_p_min');
-  filtro_p_max.addEventListener('change', filtrar);
-
-  var filtro_p_min = document.getElementById('filtro_p_max');
-  filtro_p_min.addEventListener('change', filtrar);
-*/
-
+document.addEventListener('DOMContentLoaded', function () { 
   var aplicar_filtros = document.getElementById('aplicar_filtros');
   aplicar_filtros.addEventListener('click', filtrar);
 }, false);
@@ -37,7 +24,7 @@ function cargarMapa(data) {
     center: myLatLng,
     disableDefaultUI: true,
     zoomControl: true,
-    mapTypeControl: true,   
+    mapTypeControl: true,
   });
 
   map.setOptions({
@@ -168,6 +155,13 @@ function dateToStringDMA(fecha) {
   return dd + '/' + mm + '/' + yyyy;
 }
 
+function dateInverter(stringDate) {
+  var dd = stringDate.split("/")[0].padStart(2, '0');
+  var mm = stringDate.split("/")[1].padStart(2, '0'); // Enero es 0  
+  var yyyy = stringDate.split("/")[2];
+  return yyyy + '/' + mm + '/' + dd;
+}
+
 function stringDMAToDate(stringDate) {
   var dateParts = stringDate.split("/");
   // month is 0-based, that's why we need dataParts[1] - 1
@@ -185,21 +179,17 @@ function filtrar() {
   let filtro_t = document.getElementById('filtro_tipo');
   let filtro_o = document.getElementById('filtro_oferta');
   let filtro_f = document.getElementById('filtro_fecha');
-  let fecha_hasta = getProximaSemana(filtro_f.value);
-  //fecha_hasta='30/11/2021';
-  let fecha_desde = filtro_f.value;
-  //console.log(fecha_desde);
-  //console.log(fecha_hasta);
+  let proxima = getProximaSemana(filtro_f.value)
+  let fecha_desde = dateInverter(filtro_f.value);
+  let fecha_hasta = dateInverter(proxima);
+
   marcadores.forEach(marcador => {
-    var dateParts = marcador.data[8].split("/");
     var dd = marcador.data[8].split("/")[0].padStart(2, '0');
     var mm = marcador.data[8].split("/")[1].padStart(2, '0'); // Enero es 0  
-    var yyyy = marcador.data[8].split("/")[2];
-    let fecha= dd + '/' + mm + '/' + yyyy;
+    var yyyy = marcador.data[8].split("/")[2].substring(0, 4);
+    let fecha = yyyy + '/' + mm + '/' + dd;
 
     let cumple = true;
-    //console.log(marcador.data[8] + (marcador.data[8] >= fecha_desde));
-   // console.log(fecha + (fecha < fecha_hasta));
     cumple = cumple && (fecha >= fecha_desde) && (fecha < fecha_hasta);
     cumple = cumple && (filtro_t.value == "Todos" || marcador.data[1] == filtro_t.value);
     cumple = cumple && (filtro_o.value == "Todos" || marcador.data[0] == filtro_o.value);
@@ -257,14 +247,11 @@ function getFicha(prop) {
 }
 
 function getData() {
-  /*Prueba*/
-  //var url = "https://sheets.googleapis.com/v4/spreadsheets/1Z6ckEgXOxzM9tjS9p-w7YTqXjf9D6IF_PiJlP4j8KKU/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
   var url = "https://sheets.googleapis.com/v4/spreadsheets/1h5QpK4d5NAmDET20Pe7tAgDYcWjXzztUSV7Qq0ALIuk/values/Mapa!A6:O?key=AIzaSyBb6E0QnyBTlhp-b9JyEyWsL9qAHhKcAiw";
 
   var datos = [];
   fetch(url).then(response => response.json())
     .then(data => {
       cargarMapa(data);
-      //console.log(data);
     });
 }
