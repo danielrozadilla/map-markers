@@ -1,10 +1,9 @@
 let marcadores = [];
 
-document.addEventListener('DOMContentLoaded', function () { 
+document.addEventListener('DOMContentLoaded', function () {
   var aplicar_filtros = document.getElementById('aplicar_filtros');
   aplicar_filtros.addEventListener('click', filtrar);
 }, false);
-
 
 function initMap() {
   getData();
@@ -189,10 +188,18 @@ function filtrar() {
     var yyyy = marcador.data[8].split("/")[2].substring(0, 4);
     let fecha = yyyy + '/' + mm + '/' + dd;
 
+    let oferta=[];
+    oferta = ["Todos"];
+    if (filtro_o.value == "Disponible") {
+      oferta = ["Ingreso", "Oportunidad"];
+    } else {
+      oferta = ["Búsqueda"];
+    }
     let cumple = true;
-    cumple = cumple && (fecha >= fecha_desde) && (fecha < fecha_hasta);
+    //cumple = cumple && (fecha >= fecha_desde) && (fecha < fecha_hasta);
+    cumple = cumple && (fecha >= fecha_desde);
     cumple = cumple && (filtro_t.value == "Todos" || marcador.data[1] == filtro_t.value);
-    cumple = cumple && (filtro_o.value == "Todos" || marcador.data[0] == filtro_o.value);
+    cumple = cumple && (filtro_o.value == "Todos" || oferta.includes(marcador.data[0]));
     cumple = cumple && (filtro_p_min.value == "" || soloDigitos(marcador.data[2]) >= filtro_p_min.value);
     cumple = cumple && (filtro_p_max.value == "" || soloDigitos(marcador.data[2]) <= filtro_p_max.value);
     marcador.marker.setVisible(cumple);
@@ -230,6 +237,7 @@ function getFicha(prop) {
 
   document.getElementById("tipo").innerHTML = oferta + ": " + tipo;
   document.getElementById("direccion").innerHTML = "<strong>Ubicación:</strong> " + direccion + " " + calle + " " + numero;
+  document.getElementById("fecha").innerHTML = "<strong>Fecha de publicación:</strong> " + fecha.substring(0, 10);
   document.getElementById("observaciones").innerHTML = "<strong>Observaciones:</strong> " + observaciones;
   document.getElementById("precio").innerHTML = "<strong>Precio:</strong> " + precio;
   document.getElementById("link").href = link;

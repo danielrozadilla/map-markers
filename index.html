@@ -13,7 +13,7 @@
 
 <body>
 
-  
+
   <div id="leyenda">
     <span class="oportunidad"><span class="cuadrito"></span> Oportunidad</span>
     <span class="ingreso"><span class="cuadrito"></span>Ingreso</span>
@@ -29,9 +29,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item m-2">
             <div class="input-group">
-              <select class="form-select col" id="filtro_fecha">                
-                
-              </select>
+              <select class="form-select" id="filtro_fecha"></select>
             </div>
           </li>
 
@@ -60,8 +58,9 @@
               <select class="form-select col" id="filtro_oferta">
                 <option value="Todos" selected>Estado</option>
                 <option value="Búsqueda">Búsqueda</option>
-                <option value="Ingreso">Ingreso</option>
-                <option value="Oportunidad">Oportunidad</option>
+                <option value="Disponible">Disponible</option>
+                <!--<option value="Ingreso">Ingreso</option>
+                <option value="Oportunidad">Oportunidad</option>-->
               </select>
             </div>
           </li>
@@ -84,7 +83,7 @@
       </div>
     </div>
   </nav>
-  
+
   <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog col-sm-10 col-md-4">
       <div class="modal-content">
@@ -96,6 +95,7 @@
           <div class="card">
             <div class="card-body">
               <p id="direccion"></p>
+              <p id="fecha"></p>
               <p id="observaciones"></p>
               <p id="precio"></p>
               <a id="link" href="#" target="_blank" class="btn btn-success">Ver en inmobiliaria</a>
@@ -128,7 +128,7 @@
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiVyEftA2TW5WKwPf3vhtND8Tmkjqf8dc&callback=initMap&v=weekly" async></script>
   <!--AIzaSyDiVyEftA2TW5WKwPf3vhtND8Tmkjqf8dc-->
-  
+
 </body>
 
 </html>
